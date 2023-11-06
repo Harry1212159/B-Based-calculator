@@ -9,9 +9,19 @@ int charToInt(char c, int B){
         return c - '0';
     else if(c >= 'A' && c <= 'Z')
         return c - 'A' + 10;
+    else if (c >= 'a' && c <= 'z') 
+        return c - 'a' + 10;
     if (res >= 0 && res < B) return res;
     throw::invalid_argument("Not an int in base B");
     return -1;
+}
+
+char intToChar(int n){
+    if (n == '-') 
+        return n;
+    if (n >= 0 && n <= 9) 
+        return n + '0';
+    return n - 10 + 'A';
 }
 
 string addToBaseB(string s1, string s2, int B){
@@ -26,7 +36,7 @@ string addToBaseB(string s1, string s2, int B){
         int sum = val1 + val2 + carry;
         carry = sum / B;
         sum = sum % B;
-        result = char(sum + '0') + result;
+        result = intToChar(sum) + result;
     }
 
     if (carry > 0) {
@@ -76,8 +86,7 @@ string subtractToBaseB(string s1, string s2, int B){
         }
 
         int diff = value1 - value2;
-        char ch = char(diff + '0');
-        result = ch + result;
+        result = intToChar(diff) + result;
     }
 
     while (result.length() > 1 && result[0] == '0') {
